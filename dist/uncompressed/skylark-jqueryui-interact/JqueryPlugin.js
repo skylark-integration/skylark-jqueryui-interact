@@ -3,13 +3,94 @@ define([
 	"skylark-langx/objects",
 	"skylark-langx/arrays",
 	"skylark-langx/langx",
+	"skylark-utils-dom/datax",
 	"skylark-utils-dom/eventer",
 	"skylark-utils-dom/plugins",
 	"skylark-utils-dom/query",
-],function(types, objects, arrays, langx, eventer, plugins, $){
+],function(types, objects, arrays, langx, datax, eventer, plugins, $){
+
+    var pluginUuid = 0;
 
 	var JqPlugin = plugins.Plugin.inherit({
 		klassName : "JqPlugin",
+
+        pluginEventPrefix: "",
+
+        options: {
+            // Callbacks
+            create: null
+        },
+
+        destroy: function() {
+            this.overrided();
+
+            // We can probably remove the unbind calls in 2.0
+            // all event bindings should go through this._on()
+            this.element
+                .off( this.eventNamespace );
+
+            this.plugin()
+                .off( this.eventNamespace )
+                .removeAttr( "aria-disabled" );
+
+            // Clean up events and states
+            this.bindings.off( this.eventNamespace );
+        },
+
+        _construct : function(element,options) {
+            //this.options = langx.mixin( {}, this.options );
+
+            element = $( element || this.defaultElement || this )[ 0 ];
+
+            this.overrided(element,options);
+            
+            this.element = $( element );
+            this.uuid = pluginUuid++;
+            this.eventNamespace = "." + this.pluginName + this.uuid;
+
+            this.bindings = $();
+            this.classesElementLookup = {};
+
+            if ( element !== this ) {
+                datax.data( element, this.pluginName, this );
+                this._on( true, this.element, {
+                    remove: function( event ) {
+                        if ( event.target === element ) {
+                            this.destroy();
+                        }
+                    }
+                } );
+                this.document = $( element.style ?
+
+                    // Element within the document
+                    element.ownerDocument :
+
+                    // Element is window or document
+                    element.document || element );
+                this.window = $( this.document[ 0 ].defaultView || this.document[ 0 ].parentWindow );
+            }
+
+//            this.options = langx.mixin( {},
+//                this.options,
+//                this._getCreateOptions(),
+//                options );
+
+            this._create();
+
+            this._trigger( "create", null, this._getCreateEventData() );
+
+            this._init();
+        },
+
+//        _getCreateOptions: function() {
+//            return {};
+//        },
+
+        _getCreateEventData: langx.noop,
+
+        _create: langx.noop,
+
+        _init: langx.noop,
 
 		_classes: function( options ) {
 			var full = [];
@@ -19,6 +100,7 @@ define([
 				element: this.element,
 				classes: this.options.classes || {}
 			}, options );
+
 
 			function bindRemoveEvent() {
 				options.element.each( function( _, element ) {

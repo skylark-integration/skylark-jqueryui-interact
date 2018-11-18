@@ -56,7 +56,7 @@
                 args.push(require(dep));
             })
 
-            module.exports = module.factory.apply(window, args);
+            module.exports = module.factory.apply(globals, args);
         }
         return module.exports;
     };
@@ -72,7 +72,7 @@
     var skylarkjs = require("skylark-langx/skylark");
 
     if (isCmd) {
-      exports = skylarkjs;
+      module.exports = skylarkjs;
     } else {
       globals.skylarkjs  = skylarkjs;
     }
@@ -3126,10 +3126,14 @@ define('skylark-utils-dom/skylark',["skylark-langx/skylark"], function(skylark) 
     return skylark;
 });
 
+define('skylark-utils-dom/dom',["./skylark"], function(skylark) {
+	return skylark.dom = {};
+});
+
 define('skylark-utils-dom/browser',[
-    "./skylark",
+    "./dom",
     "./langx"
-], function(skylark,langx) {
+], function(dom,langx) {
     "use strict";
  
     var checkedCssProperties = {
@@ -3254,13 +3258,13 @@ define('skylark-utils-dom/browser',[
 
     testEl = null;
 
-    return skylark.browser = browser;
+    return dom.browser = browser;
 });
 
 define('skylark-utils-dom/styler',[
-    "./skylark",
+    "./dom",
     "./langx"
-], function(skylark, langx) {
+], function(dom, langx) {
     var every = Array.prototype.every,
         forEach = Array.prototype.forEach,
         camelCase = langx.camelCase,
@@ -3506,14 +3510,14 @@ define('skylark-utils-dom/styler',[
         toggleClass: toggleClass
     });
 
-    return skylark.styler = styler;
+    return dom.styler = styler;
 });
 define('skylark-utils-dom/noder',[
-    "./skylark",
+    "./dom",
     "./langx",
     "./browser",
     "./styler"
-], function(skylark, langx, browser, styler) {
+], function(dom, langx, browser, styler) {
     var isIE = !!navigator.userAgent.match(/Trident/g) || !!navigator.userAgent.match(/MSIE/g),
         fragmentRE = /^\s*<(\w+|!)[^>]*>/,
         singleTagRE = /^<(\w+)\s*\/?>(?:<\/\1>|)$/,
@@ -4193,14 +4197,14 @@ define('skylark-utils-dom/noder',[
         unwrap: unwrap
     });
 
-    return skylark.noder = noder;
+    return dom.noder = noder;
 });
 define('skylark-utils-dom/finder',[
-    "./skylark",
+    "./dom",
     "./langx",
     "./browser",
     "./noder"
-], function(skylark, langx, browser, noder, velm) {
+], function(dom, langx, browser, noder, velm) {
     var local = {},
         filter = Array.prototype.filter,
         slice = Array.prototype.slice,
@@ -5301,13 +5305,13 @@ define('skylark-utils-dom/finder',[
         siblings: siblings
     });
 
-    return skylark.finder = finder;
+    return dom.finder = finder;
 });
 define('skylark-utils-dom/datax',[
-    "./skylark",
+    "./dom",
     "./langx",
     "./finder"
-], function(skylark, langx, finder) {
+], function(dom, langx, finder) {
     var map = Array.prototype.map,
         filter = Array.prototype.filter,
         camelCase = langx.camelCase,
@@ -5593,16 +5597,16 @@ define('skylark-utils-dom/datax',[
         val: val
     });
 
-    return skylark.datax = datax;
+    return dom.datax = datax;
 });
 define('skylark-utils-dom/eventer',[
-    "./skylark",
+    "./dom",
     "./langx",
     "./browser",
     "./finder",
     "./noder",
     "./datax"
-], function(skylark, langx, browser, finder, noder, datax) {
+], function(dom, langx, browser, finder, noder, datax) {
     var mixin = langx.mixin,
         each = langx.each,
         slice = Array.prototype.slice,
@@ -6276,14 +6280,14 @@ define('skylark-utils-dom/eventer',[
 
     });
 
-    return skylark.eventer = eventer;
+    return dom.eventer = eventer;
 });
 define('skylark-utils-dom/geom',[
-    "./skylark",
+    "./dom",
     "./langx",
     "./noder",
     "./styler"
-], function(skylark, langx, noder, styler) {
+], function(dom, langx, noder, styler) {
     var rootNodeRE = /^(?:body|html)$/i,
         px = langx.toPixel,
         offsetParent = noder.offsetParent,
@@ -7332,16 +7336,16 @@ define('skylark-utils-dom/geom',[
         geom.posit = posit;
     })();
 
-    return skylark.geom = geom;
+    return dom.geom = geom;
 });
 define('skylark-utils-dom/fx',[
-    "./skylark",
+    "./dom",
     "./langx",
     "./browser",
     "./geom",
     "./styler",
     "./eventer"
-], function(skylark, langx, browser, geom, styler, eventer) {
+], function(dom, langx, browser, geom, styler, eventer) {
     var animationName,
         animationDuration,
         animationTiming,
@@ -7862,10 +7866,10 @@ define('skylark-utils-dom/fx',[
         toggle: toggle
     });
 
-    return skylark.fx = fx;
+    return dom.fx = fx;
 });
 define('skylark-utils-dom/query',[
-    "./skylark",
+    "./dom",
     "./langx",
     "./noder",
     "./datax",
@@ -7874,7 +7878,7 @@ define('skylark-utils-dom/query',[
     "./geom",
     "./styler",
     "./fx"
-], function(skylark, langx, noder, datax, eventer, finder, geom, styler, fx) {
+], function(dom, langx, noder, datax, eventer, finder, geom, styler, fx) {
     var some = Array.prototype.some,
         push = Array.prototype.push,
         every = Array.prototype.every,
@@ -8814,11 +8818,11 @@ define('skylark-utils-dom/query',[
         return returnValue;
     };
 
-    return skylark.query = query;
+    return dom.query = query;
 
 });
-define('skylark-utils-dom/velm',[
-    "./skylark",
+define('skylark-utils-dom/elmx',[
+    "./dom",
     "./langx",
     "./datax",
     "./eventer",
@@ -8827,7 +8831,7 @@ define('skylark-utils-dom/velm',[
     "./geom",
     "./noder",
     "./styler"
-], function(skylark, langx, datax, eventer, finder, fx, geom, noder, styler) {
+], function(dom, langx, datax, eventer, finder, fx, geom, noder, styler) {
     var map = Array.prototype.map,
         slice = Array.prototype.slice;
     /*
@@ -8848,7 +8852,7 @@ define('skylark-utils-dom/velm',[
      * the VisualElement object wrapping document.body
      */
     var root = new VisualElement(document.body),
-        velm = function(node) {
+        elmx = function(node) {
             if (node) {
                 return new VisualElement(node);
             } else {
@@ -8887,10 +8891,10 @@ define('skylark-utils-dom/velm',[
         };
     }
 
-    langx.mixin(velm, {
+    langx.mixin(elmx, {
         batch: function(nodes, action, args) {
             nodes.forEach(function(node) {
-                var elm = (node instanceof VisualElement) ? node : velm(node);
+                var elm = (node instanceof VisualElement) ? node : elmx(node);
                 elm[action].apply(elm, args);
             });
 
@@ -8921,7 +8925,7 @@ define('skylark-utils-dom/velm',[
     });
 
     // from ./datax
-    velm.delegate([
+    elmx.delegate([
         "attr",
         "data",
         "prop",
@@ -8932,7 +8936,7 @@ define('skylark-utils-dom/velm',[
     ], datax);
 
     // from ./eventer
-    velm.delegate([
+    elmx.delegate([
         "off",
         "on",
         "one",
@@ -8941,7 +8945,7 @@ define('skylark-utils-dom/velm',[
     ], eventer);
 
     // from ./finder
-    velm.delegate([
+    elmx.delegate([
         "ancestor",
         "ancestors",
         "children",
@@ -8963,7 +8967,7 @@ define('skylark-utils-dom/velm',[
      * find a dom element matched by the specified selector.
      * @param {String} selector
      */
-    velm.find = function(selector) {
+    elmx.find = function(selector) {
         if (selector === "body") {
             return this.root;
         } else {
@@ -8972,7 +8976,7 @@ define('skylark-utils-dom/velm',[
     };
 
     // from ./fx
-    velm.delegate([
+    elmx.delegate([
         "animate",
         "fadeIn",
         "fadeOut",
@@ -8986,7 +8990,7 @@ define('skylark-utils-dom/velm',[
 
 
     // from ./geom
-    velm.delegate([
+    elmx.delegate([
         "borderExtents",
         "boundingPosition",
         "boundingRect",
@@ -9010,7 +9014,7 @@ define('skylark-utils-dom/velm',[
     ], geom);
 
     // from ./noder
-    velm.delegate([
+    elmx.delegate([
         "after",
         "append",
         "before",
@@ -9034,7 +9038,7 @@ define('skylark-utils-dom/velm',[
     ], noder);
 
     // from ./styler
-    velm.delegate([
+    elmx.delegate([
         "addClass",
         "className",
         "css",
@@ -9083,11 +9087,10 @@ define('skylark-utils-dom/velm',[
     });
 
 
-    return skylark.velm = velm;
+    return dom.elmx = elmx;
 });
 define('skylark-utils-dom/plugins',[
-    "skylark-langx/skylark",
-    "skylark-langx/klass",
+    "./dom",
     "./langx",
     "./noder",
     "./datax",
@@ -9097,8 +9100,8 @@ define('skylark-utils-dom/plugins',[
     "./styler",
     "./fx",
     "./query",
-    "./velm"
-], function(skylark, klass, langx, noder, datax, eventer, finder, geom, styler, fx, $, velm) {
+    "./elmx"
+], function(dom, langx, noder, datax, eventer, finder, geom, styler, fx, $, elmx) {
     "use strict";
 
 	var slice = Array.prototype.slice,
@@ -9115,7 +9118,7 @@ define('skylark-utils-dom/plugins',[
         pluginKlasses[name] = pluginKlass;
 
         if (shortcut) {
-            velm.partial(shortcut,$.fn[shortcut] = function(options) {
+            elmx.partial(shortcut,$.fn[shortcut] = function(options) {
                 var args = slice.call(arguments,0);
                 args.unshift(name);
                 return this.plugin.apply(this,args);
@@ -9165,65 +9168,19 @@ define('skylark-utils-dom/plugins',[
                 pluginInstance.option( options || {} );
             } else {
                 var pluginKlass = pluginKlasses[pluginName]; 
-                datax.data( elm, pluginName, new pluginKlass( options, elm ) );
+                datax.data( elm, pluginName, new pluginKlass(elm,options));
             }
         }
 
         return returnValue;
     }
 
-    var pluginUuid = 0;
     var Plugin =   langx.Evented.inherit({
         klassName: "Plugin",
 
-        pluginEventPrefix: "",
-
-        options: {
-            // Callbacks
-            create: null
-        },
-
-        _construct : function(options,element) {
-            //this.options = langx.mixin( {}, this.options );
-
-            element = $( element || this.defaultElement || this )[ 0 ];
-            this.element = $( element );
-            this.uuid = pluginUuid++;
-            this.eventNamespace = "." + this.pluginName + this.uuid;
-
-            this.bindings = $();
-            this.classesElementLookup = {};
-
-            if ( element !== this ) {
-                datax.data( element, this.pluginName, this );
-                this._on( true, this.element, {
-                    remove: function( event ) {
-                        if ( event.target === element ) {
-                            this.destroy();
-                        }
-                    }
-                } );
-                this.document = $( element.style ?
-
-                    // Element within the document
-                    element.ownerDocument :
-
-                    // Element is window or document
-                    element.document || element );
-                this.window = $( this.document[ 0 ].defaultView || this.document[ 0 ].parentWindow );
-            }
-
-//            this.options = langx.mixin( {},
-//                this.options,
-//                this._getCreateOptions(),
-//                options );
-            this._initOptions(options);
-
-            this._create();
-
-            this._trigger( "create", null, this._getCreateEventData() );
-
-            this._init();
+        _construct : function(elm,options) {
+           this._elm = elm;
+           this._initOptions(options);
         },
 
         _initOptions : function(options) {
@@ -9251,15 +9208,6 @@ define('skylark-utils-dom/plugins',[
           return this.options = langx.mixin(defaults,options);
         },
 
-//        _getCreateOptions: function() {
-//            return {};
-//        },
-
-        _getCreateEventData: langx.noop,
-
-        _create: langx.noop,
-
-        _init: langx.noop,
 
         destroy: function() {
             var that = this;
@@ -9267,15 +9215,7 @@ define('skylark-utils-dom/plugins',[
             this._destroy();
             // We can probably remove the unbind calls in 2.0
             // all event bindings should go through this._on()
-            this.element
-                .off( this.eventNamespace )
-                .removeData( this.pluginName );
-            this.plugin()
-                .off( this.eventNamespace )
-                .removeAttr( "aria-disabled" );
-
-            // Clean up events and states
-            this.bindings.off( this.eventNamespace );
+            datax.removeData(this._elm,this.pluginName );
         },
 
         _destroy: langx.noop,
@@ -9346,7 +9286,7 @@ define('skylark-utils-dom/plugins',[
             this.options[ key ] = value;
 
             return this;
-        },
+        }
 
     });
 
@@ -9361,7 +9301,7 @@ define('skylark-utils-dom/plugins',[
         return returnValue;
     };
 
-    velm.partial("plugin",function(name,options) {
+    elmx.partial("plugin",function(name,options) {
         var args = slice.call( arguments, 1 );
         return instantiate.apply(this,[this,name].concat(args));
     }); 
@@ -9387,13 +9327,94 @@ define('skylark-jqueryui-interact/JqueryPlugin',[
 	"skylark-langx/objects",
 	"skylark-langx/arrays",
 	"skylark-langx/langx",
+	"skylark-utils-dom/datax",
 	"skylark-utils-dom/eventer",
 	"skylark-utils-dom/plugins",
 	"skylark-utils-dom/query",
-],function(types, objects, arrays, langx, eventer, plugins, $){
+],function(types, objects, arrays, langx, datax, eventer, plugins, $){
+
+    var pluginUuid = 0;
 
 	var JqPlugin = plugins.Plugin.inherit({
 		klassName : "JqPlugin",
+
+        pluginEventPrefix: "",
+
+        options: {
+            // Callbacks
+            create: null
+        },
+
+        destroy: function() {
+            this.overrided();
+
+            // We can probably remove the unbind calls in 2.0
+            // all event bindings should go through this._on()
+            this.element
+                .off( this.eventNamespace );
+
+            this.plugin()
+                .off( this.eventNamespace )
+                .removeAttr( "aria-disabled" );
+
+            // Clean up events and states
+            this.bindings.off( this.eventNamespace );
+        },
+
+        _construct : function(element,options) {
+            //this.options = langx.mixin( {}, this.options );
+
+            element = $( element || this.defaultElement || this )[ 0 ];
+
+            this.overrided(element,options);
+            
+            this.element = $( element );
+            this.uuid = pluginUuid++;
+            this.eventNamespace = "." + this.pluginName + this.uuid;
+
+            this.bindings = $();
+            this.classesElementLookup = {};
+
+            if ( element !== this ) {
+                datax.data( element, this.pluginName, this );
+                this._on( true, this.element, {
+                    remove: function( event ) {
+                        if ( event.target === element ) {
+                            this.destroy();
+                        }
+                    }
+                } );
+                this.document = $( element.style ?
+
+                    // Element within the document
+                    element.ownerDocument :
+
+                    // Element is window or document
+                    element.document || element );
+                this.window = $( this.document[ 0 ].defaultView || this.document[ 0 ].parentWindow );
+            }
+
+//            this.options = langx.mixin( {},
+//                this.options,
+//                this._getCreateOptions(),
+//                options );
+
+            this._create();
+
+            this._trigger( "create", null, this._getCreateEventData() );
+
+            this._init();
+        },
+
+//        _getCreateOptions: function() {
+//            return {};
+//        },
+
+        _getCreateEventData: langx.noop,
+
+        _create: langx.noop,
+
+        _init: langx.noop,
 
 		_classes: function( options ) {
 			var full = [];
@@ -9403,6 +9424,7 @@ define('skylark-jqueryui-interact/JqueryPlugin',[
 				element: this.element,
 				classes: this.options.classes || {}
 			}, options );
+
 
 			function bindRemoveEvent() {
 				options.element.each( function( _, element ) {
