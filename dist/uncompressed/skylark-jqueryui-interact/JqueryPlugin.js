@@ -29,10 +29,6 @@ define([
             this.element
                 .off( this.eventNamespace );
 
-            this.plugin()
-                .off( this.eventNamespace )
-                .removeAttr( "aria-disabled" );
-
             // Clean up events and states
             this.bindings.off( this.eventNamespace );
         },
