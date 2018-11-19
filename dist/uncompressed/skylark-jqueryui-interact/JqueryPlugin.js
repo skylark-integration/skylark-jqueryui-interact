@@ -51,6 +51,9 @@ define([
             this.bindings = $();
             this.classesElementLookup = {};
 
+			this.hoverable = $();
+			this.focusable = $();
+
             if ( element !== this ) {
                 datax.data( element, this.pluginName, this );
                 this._on( true, this.element, {
