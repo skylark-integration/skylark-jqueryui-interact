@@ -4,7 +4,7 @@ define( [
 	"skylark-utils-dom/noder",
 	"skylark-utils-dom/query",
 	"skylark-utils-dom/plugins",
-	"./JqueryPlugin",
+	"skylark-jquery/JqueryPlugin",
 	"./patch",
 	"./ddmanager",
 ],function(langx, eventer, noder, $, plugins, JqPlugin, patch, ddmanager) {

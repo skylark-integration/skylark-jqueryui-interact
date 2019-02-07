@@ -3,7 +3,7 @@ define( [
 	"skylark-utils-dom/datax",
 	"skylark-utils-dom/query",
 	"skylark-utils-dom/plugins",
-	"./JqueryPlugin",
+	"skylark-jquery/JqueryPlugin"
 ],function(browser, datax, $, plugins, JqPlugin) {
 
 	var mouseHandled = false;
