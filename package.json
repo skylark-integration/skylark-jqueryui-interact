@@ -9,20 +9,25 @@
   "scripts": {
     "build": "sbundle build ."
   },
-  "homepage": "https://github.com/skylarkui/skylark-jqueryui-interact/",
+  "homepage": "https://github.com/skylark-integration/skylark-jqueryui-interact/",
   "author": "Hudaokeji, Inc.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/skylarkui/skylark-jqueryui-interact.git"
+    "url": "https://github.com/skylark-integration/skylark-jqueryui-interact.git"
   },
   "bugs": {
-    "url": "https://github.com/skylarkui/skylark-jqueryui-interact/issues"
+    "url": "https://github.com/skylark-integration/skylark-jqueryui-interact/issues"
   },
+  "files": [
+    "demos/",
+    "dist/",
+    "src/",
+    "themes/"
+  ],
   "license": "MIT",
   "dependencies": {
-    "skylark-jquery": "git+https://github.com/skylarkutils/skylark-jquery.git#master",
-    "skylark-langx": "git+https://github.com/skylarklangx/skylark-langx.git#master",
-    "skylark-utils-dom": "git+https://github.com/skylarkutils/skylark-utils-dom.git#master"
+    "skylark-jquery": "git+https://github.com/skylark-integration/skylark-jquery.git#master",
+    "skylark-langx": "git+https://github.com/skylark-langx/skylark-langx.git#master"
   },
   "engines": {
     "node": ">=0.10.1"
