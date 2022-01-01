@@ -796,7 +796,7 @@ define( [
 				top = ( parseFloat( that.element.css( "top" ) ) +
 					( that.position.top - that.originalPosition.top ) ) || null;
 
-			that.element.animate(
+			that.element.transit(
 				langx.extend( style, top && left ? { top: top, left: left } : {} ), {
 					duration: o.animateDuration,
 					easing: o.animateEasing,

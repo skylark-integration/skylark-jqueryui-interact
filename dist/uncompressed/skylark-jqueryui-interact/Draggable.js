@@ -275,7 +275,7 @@ define( [
 					this.options.revert === true || ( langx.isFunction( this.options.revert ) &&
 					this.options.revert.call( this.element, dropped ) )
 			) {
-				$( this.helper ).animate(
+				$( this.helper ).transit(
 					this.originalPosition,
 					parseInt( this.options.revertDuration, 10 ),
 					function() {
@@ -294,6 +294,7 @@ define( [
 		},
 
 		_mouseUp: function( event ) {
+			//TODO : unnecessary?
 			this._unblockFrames();
 
 			// If the ddmanager is used for droppables, inform the manager that dragging has stopped
