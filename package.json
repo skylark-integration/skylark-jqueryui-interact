@@ -26,7 +26,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "skylark-jquery": "git+https://github.com/skylark-domx-plugins/skylark-domx-plugins-interact.git",
+    "skylark-domx-plugins-interact": "git+https://github.com/skylark-domx-plugins/skylark-domx-plugins-interact.git",
     "skylark-jquery": "git+https://github.com/skylark-integration/skylark-jquery.git",
     "skylark-langx": "git+https://github.com/skylark-langx/skylark-langx.git"
   },
