@@ -5,10 +5,8 @@
  * @link https://github.com/skylark-integration/skylark-jqueryui-interact/
  * @license MIT
  */
-(function(factory,globals) {
-  var define = globals.define,
-      require = globals.require,
-      isAmd = (typeof define === 'function' && define.amd),
+(function(factory,globals,define,require) {
+  var isAmd = (typeof define === 'function' && define.amd),
       isCmd = (!isAmd && typeof exports !== 'undefined');
 
   if (!isAmd && !define) {
@@ -4517,7 +4515,7 @@ define( 'skylark-jqueryui-interact/Sortable',[
 			// 2. The actual offset parent is a child of the scroll parent, and the scroll parent isn't
 			// the document, which means that the scroll is included in the initial calculation of the
 			// offset of the parent, and never recalculated upon drag
-			if ( this.cssPosition === "absolute" && this.scrollParent[ 0 ] !== this.document[ 0 ] &&
+			if ( this.cssPosition === "absolute" && this.scrollParent[ 0 ] !== this.document[ 0 ] && this.scrollParent[0] !== this.document[ 0 ].body && // modified by LWF for scrollable body
 					noder.contains( this.scrollParent[ 0 ], this.offsetParent[ 0 ] ) ) {
 				po.left += this.scrollParent.scrollLeft();
 				po.top += this.scrollParent.scrollTop();
@@ -4962,5 +4960,5 @@ define( 'skylark-jqueryui-interact/main',[
 define('skylark-jqueryui-interact', ['skylark-jqueryui-interact/main'], function (main) { return main; });
 
 
-},this);
+},this,define,require);
 //# sourceMappingURL=sourcemaps/skylark-jqueryui-interact.js.map
