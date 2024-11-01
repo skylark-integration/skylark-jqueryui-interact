@@ -31,6 +31,7 @@
 			"skylark-jqueryui-interact/Sortable"
 		],function($) {
 			$( "#sortable1, #sortable2" ).sortable({
+				handle : "span",
 				connectWith: ".connectedSortable"
 			}).disableSelection();
 		});
@@ -50,7 +51,7 @@
 	<li class="ui-state-highlight">Item 1</li>
 	<li class="ui-state-highlight">Item 2</li>
 	<li class="ui-state-highlight">Item 3</li>
-	<li class="ui-state-highlight">Item 4</li>
+	<li class="ui-state-highlight"><span>Item 4</span><input type="text"/></li>
 	<li class="ui-state-highlight">Item 5</li>
 </ul>
 
