@@ -1263,10 +1263,10 @@ define( 'skylark-jqueryui-interact/Draggable',[
 						// modify necessary variables to reflect the changes
 						sortable.offset.click.top = draggable.offset.click.top;
 						sortable.offset.click.left = draggable.offset.click.left;
-						sortable.offset.parent.left -= draggable.offset.parent.left -
-							sortable.offset.parent.left;
-						sortable.offset.parent.top -= draggable.offset.parent.top -
-							sortable.offset.parent.top;
+						///sortable.offset.parent.left -= draggable.offset.parent.left - // modified by lwf for fix a bug 
+						///	sortable.offset.parent.left;
+						///sortable.offset.parent.top -= draggable.offset.parent.top -
+						///	sortable.offset.parent.top;
 
 						draggable._trigger( "toSortable", event );
 
